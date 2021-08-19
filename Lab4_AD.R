@@ -24,6 +24,7 @@ library("cowplot")
 
 library(C50)
 library(caret)
+library(randomForest)
 
 #Los nombres originales de las variables, una breve explicación y los tipos de los datos:
 
@@ -87,3 +88,15 @@ arbol = C5.0(class ~ ., training.set)
 arbol.reglas = C5.0(x = training.set[, -8], y = training.set$class, rules = T)
 arbol.pred.class = predict(arbol, prueba.set[,-1], type = "class")
 arbol.pred.prob = predict(arbol, prueba.set[,-1], type = "prob")
+
+#Matriz de confusión.
+conf.matriz.arbol = confusionMatrix(table(prueba.set$class, arbol.pred.class))
+print(conf.matriz.arbol)
+
+#Mejorar resultados por randomforest.
+rf = randomForest(class~ ., data=training.set, ntree = 500, importance=TRUE, proximity=TRUE, ntry=10)
+rf.pred.class = predict(rf, prueba.set[,-1], type = "class")
+
+#Matriz de confusión de randomforest.
+conf.matriz.rf = confusionMatrix(table(prueba.set$class, rf.pred.class))
+print(conf.matriz.rf)
