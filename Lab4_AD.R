@@ -66,17 +66,54 @@ tabla <- tabla[!bool.values,]
 bool.values <- tabla$breast.quad =='?'
 tabla <- tabla[!bool.values,]
 
+#Se guardan las columnas de la tabla para ser utilizadas más adelante.
+menopause <- as.factor(tabla$menopause)
+node.caps <- as.factor(tabla$node.caps)
+deg.malig <- as.factor(tabla$deg.malig)
+breast <- as.factor(tabla$breast)
+irradiat <- as.factor(tabla$irradiat)
+
 #Todas las variables, menos la clase, se vuelven numéricas.
 tabla$class <- as.factor(tabla$class)
-tabla$age <- as.factor(tabla$age)
-tabla$menopause <- as.factor(tabla$menopause) 
-tabla$tumor.size <- as.factor(tabla$tumor.size)
-tabla$inv.nodes <- as.factor(tabla$inv.nodes)
-tabla$node.caps <- as.factor(tabla$node.caps)
-tabla$deg.malig <- as.factor(tabla$deg.malig)
-tabla$breast <- as.factor(tabla$breast)
-tabla$breast.quad <- as.factor(tabla$breast.quad)
-tabla$irradiat <- as.factor(tabla$irradiat)
+tabla$age <- unclass(as.factor(tabla$age)) 
+tabla$menopause <- unclass(as.factor(tabla$menopause)) 
+tabla$tumor.size <- unclass(as.factor(tabla$tumor.size))
+tabla$inv.nodes <- unclass(as.factor(tabla$inv.nodes)) 
+tabla$node.caps <- unclass(as.factor(tabla$node.caps))
+tabla$deg.malig <- unclass(as.factor(tabla$deg.malig))
+tabla$breast <- unclass(as.factor(tabla$breast)) 
+tabla$breast.quad <- unclass(as.factor(tabla$breast.quad)) 
+tabla$irradiat <- unclass(as.factor(tabla$irradiat))
+
+#Se reordenan los valores de tumor.size.
+tabla$tumor.size[tabla$tumor.size == 10] <- 12
+tabla$tumor.size[tabla$tumor.size == 9] <- 10
+tabla$tumor.size[tabla$tumor.size == 8] <- 9
+tabla$tumor.size[tabla$tumor.size == 7] <- 8
+tabla$tumor.size[tabla$tumor.size == 6] <- 7
+tabla$tumor.size[tabla$tumor.size == 5] <- 6
+tabla$tumor.size[tabla$tumor.size == 4] <- 5
+tabla$tumor.size[tabla$tumor.size == 3] <- 4
+tabla$tumor.size[tabla$tumor.size == 2] <- 3
+tabla$tumor.size[tabla$tumor.size == 12] <- 2
+
+#Se reordenan los valores de breast.quad.
+tabla$breast.quad[tabla$breast.quad == 4] <- 6
+tabla$breast.quad[tabla$breast.quad == 3] <- 4
+tabla$breast.quad[tabla$breast.quad == 6] <- 3
+
+#Se reordenan los valores de inv.nodes.
+tabla$inv.nodes[tabla$inv.nodes == 2] <- 8
+tabla$inv.nodes[tabla$inv.nodes == 3] <- 9
+tabla$inv.nodes[tabla$inv.nodes == 4] <- 10
+
+tabla$inv.nodes[tabla$inv.nodes == 5] <- 2
+tabla$inv.nodes[tabla$inv.nodes == 6] <- 3
+tabla$inv.nodes[tabla$inv.nodes == 7] <- 4
+
+tabla$inv.nodes[tabla$inv.nodes == 8] <- 5
+tabla$inv.nodes[tabla$inv.nodes == 9] <- 6
+tabla$inv.nodes[tabla$inv.nodes == 10] <- 7
 
 #Se crea la tabla de entrenamiento.
 training.index <- createDataPartition(tabla$class, p=0.7)$Resample1
