@@ -123,7 +123,7 @@ prueba.set <- tabla[-training.index, ]
 
 #Se crea el árbol de decisión.
 arbol = C5.0(class ~ ., training.set)
-arbol.reglas = C5.0(x = training.set[, -8], y = training.set$class, rules = T)
+arbol.reglas = C5.0(x = training.set[, -1], y = training.set$class, rules = T)
 arbol.pred.class = predict(arbol, prueba.set[,-1], type = "class")
 arbol.pred.prob = predict(arbol, prueba.set[,-1], type = "prob")
 
