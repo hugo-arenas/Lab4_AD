@@ -116,7 +116,8 @@ tabla$inv.nodes[tabla$inv.nodes == 9] <- 6
 tabla$inv.nodes[tabla$inv.nodes == 10] <- 7
 
 #Se crea la tabla de entrenamiento.
-training.index <- createDataPartition(tabla$class, p=0.7)$Resample1
+set.seed(2021)
+training.index <- createDataPartition(tabla$class, p=0.65)$Resample1
 training.set <- tabla[training.index, ]
 prueba.set <- tabla[-training.index, ]
 
